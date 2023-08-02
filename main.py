@@ -41,8 +41,6 @@ def get_pages():
 		except Exception as ex:
 			continue
 
-		today_time = str(datetime.now())[11:16]
-
 		b += 1
 
 		set_date = spisok[b]["properties"]["Set date"]["date"]["start"]
