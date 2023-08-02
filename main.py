@@ -1,5 +1,5 @@
 import requests
-from datetime import datetime
+import datetime
 from time import sleep
 
 NOTION_TOKEN = "secret_8s8Niot8QDd4dWuH5DivDgGi41S389GqnFjef5V82iE"
@@ -24,8 +24,8 @@ def get_pages():
 	spisok = {}
 
 	delta = datetime.timedelta(hours=3, minutes=0)
-	today_date = str(datetime.now(datetime.timezone.utc) + delta)[0:10]
-	today_time = str(datetime.now())[11:16]
+	today_date = str(datetime.datetime.now(datetime.timezone.utc) + delta)[0:10]
+	today_time = str(datetime.datetime.now())[11:16]
 	print(today_time)
 
 	for i in a:
