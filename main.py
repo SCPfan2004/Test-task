@@ -111,8 +111,8 @@ def get_pages():
 		today_time = (int(today_time.split(":")[0]) * 60) + int(today_time.split(":")[1])
 
 
-		set_pdate = datetime.strptime(set_date, "%Y-%m-%d")
-		today_pdate = datetime.strptime(today_date, "%Y-%m-%d")
+		set_pdate = datetime.datetime.strptime(set_date, "%Y-%m-%d")
+		today_pdate = datetime.datetime.strptime(today_date, "%Y-%m-%d")
 
 		if(set_pdate < today_pdate):
 			month = today_date[5:7]
@@ -126,7 +126,7 @@ def get_pages():
 					due_time -= 60 * 24
 					iterator += 1
 					set_date = set_date[0:8] + f"0{iterator}"
-					set_pdate = datetime.strptime(set_date, "%Y-%m-%d")
+					set_pdate = datetime.datetime.strptime(set_date, "%Y-%m-%d")
 
 			if(output_value == 10):
 				set_time = due_time
