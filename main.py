@@ -1,5 +1,5 @@
 import requests
-import datetime
+from datetime import datetime
 from time import sleep
 
 NOTION_TOKEN = "secret_8s8Niot8QDd4dWuH5DivDgGi41S389GqnFjef5V82iE"
@@ -23,11 +23,10 @@ def get_pages():
 
 	spisok = {}
 
-	delta = datetime.timedelta(hours=3, minutes=0)
-	today_date = str(datetime.datetime.now(datetime.timezone.utc) + delta)[0:10]
-	today_time = str(datetime.datetime.now())[11:16]
-	today_time = str((int(today_time[0:2]) + 3)) + today_time[2:]
-	print(today_time)
+	today_date = str(datetime.now())[0:10]
+	today_time = str(datetime.now())[11:16]
+	today_time_temp = str((int(today_time[0:2]) + 3)) + today_time[2:]
+	print(today_time_temp)
 
 	for i in a:
 		# Preparing for script
@@ -41,6 +40,8 @@ def get_pages():
 
 		except Exception as ex:
 			continue
+
+		today_time = today_time_temp
 
 		b += 1
 
@@ -112,8 +113,8 @@ def get_pages():
 		today_time = (int(today_time.split(":")[0]) * 60) + int(today_time.split(":")[1])
 
 
-		set_pdate = datetime.datetime.strptime(set_date, "%Y-%m-%d")
-		today_pdate = datetime.datetime.strptime(today_date, "%Y-%m-%d")
+		set_pdate = datetime.strptime(set_date, "%Y-%m-%d")
+		today_pdate = datetime.strptime(today_date, "%Y-%m-%d")
 
 		if(set_pdate < today_pdate):
 			month = today_date[5:7]
@@ -127,7 +128,7 @@ def get_pages():
 					due_time -= 60 * 24
 					iterator += 1
 					set_date = set_date[0:8] + f"0{iterator}"
-					set_pdate = datetime.datetime.strptime(set_date, "%Y-%m-%d")
+					set_pdate = datetime.strptime(set_date, "%Y-%m-%d")
 
 			if(output_value == 10):
 				set_time = due_time
