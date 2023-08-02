@@ -1,5 +1,4 @@
 import requests
-import json
 from datetime import datetime
 from time import sleep
 
@@ -31,7 +30,7 @@ def get_pages():
 		# Preparing for script
 		try:
 			status = i["properties"]["Status"]["select"]["name"]
-			print(status)
+
 			if(status == "Backlog" or status == "TO DO"):
 				continue
 			else:
@@ -45,12 +44,12 @@ def get_pages():
 		b += 1
 
 		set_date = spisok[b]["properties"]["Set date"]["date"]["start"]
-		set_date = today_date + set_date[10:]
 		set_time = set_date[11:16]
+		set_date = set_date[0:10]
 
 		due_date = spisok[b]["properties"]["Due Date"]["date"]["start"]
-		due_date = today_date + due_date[10:]
 		due_time = due_date[11:16]
+		due_date = due_date[0:10]
 
 		periodicity = [str(spisok[b]["properties"]["Periodicity"]["multi_select"][0]["name"])]
 
@@ -111,6 +110,34 @@ def get_pages():
 
 		today_time = (int(today_time.split(":")[0]) * 60) + int(today_time.split(":")[1])
 
+
+		set_pdate = datetime.strptime(set_date, "%Y-%m-%d")
+		today_pdate = datetime.strptime(today_date, "%Y-%m-%d")
+
+		if(set_pdate < today_pdate):
+			month = today_date[5:7]
+
+			iterator = 1
+			set_date = set_date[0:5] + month + f"-0{iterator}"
+
+			while(set_pdate < today_pdate):
+				due_time += output_value
+				if(due_time // 60 >= 24):
+					due_time -= 60 * 24
+					iterator += 1
+					set_date = set_date[0:8] + f"0{iterator}"
+					set_pdate = datetime.strptime(set_date, "%Y-%m-%d")
+
+			if(output_value == 10):
+				set_time = due_time
+			elif(output_value <= 300):
+				set_time = due_time - 10
+			elif(output_value < 600 and output_value > 300):
+				set_time = due_time - 70
+			elif(output_value >= 600):
+				set_time = due_time - 140
+
+
 		if(set_time < today_time):
 
 			due_time += output_value
@@ -126,6 +153,9 @@ def get_pages():
 			elif(output_value >= 600):
 				set_time = due_time - 140
 
+			# Script end
+
+			# Date formatting
 
 			set_time = str(set_time // 60) + ":" + str(set_time % 60)
 			if(len(set_time.split(":")[0]) == 1):
@@ -152,18 +182,17 @@ def get_pages():
 			set_date = today_date + "T" + set_time + set_date[16:]
 			due_date = today_date + "T" + due_time + due_date[16:]
 
-			page_id = spisok[b]["id"]
-
-
 
 			# Make a query
+
+			page_id = spisok[b]["id"]
+
 			changing_properties = {"Set date": {"date": {"start": set_date}}, "Due Date": {"date": {"start": due_date}}}
 			payload = {"properties": changing_properties}
 			url2 = f"https://api.notion.com/v1/pages/{page_id}"
 			response = requests.patch(url2, json=payload, headers=headers)
 
 			print(response)
-
 
 		elif(set_time == today_time):
 			stat = "TO DO"
@@ -182,6 +211,9 @@ while(True):
 	o += 1
 	get_pages()
 	print("Iter: ", o)
+
+
 	sleep(60)
+
 
 input("Enter...")
