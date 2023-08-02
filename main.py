@@ -23,7 +23,8 @@ def get_pages():
 
 	spisok = {}
 
-	today_date = str(datetime.now())[0:10]
+	delta = datetime.timedelta(hours=3, minutes=0)
+	today_date = str(datetime.now(datetime.timezone.utc) + delta)[0:10]
 	today_time = str(datetime.now())[11:16]
 	print(today_time)
 
@@ -105,6 +106,7 @@ def get_pages():
 					output_value = value
 
 		# Script work
+
 		set_time = (int(set_time.split(":")[0]) * 60) + int(set_time.split(":")[1])
 		due_time = (int(due_time.split(":")[0]) * 60) + int(due_time.split(":")[1])
 
@@ -119,7 +121,7 @@ def get_pages():
 
 			iterator = 1
 			set_date = set_date[0:5] + month + f"-0{iterator}"
-	
+
 			while(set_pdate < today_pdate):
 				due_time += output_value
 				if(due_time // 60 >= 24):
@@ -128,8 +130,18 @@ def get_pages():
 					set_date = set_date[0:8] + f"0{iterator}"
 					set_pdate = datetime.strptime(set_date, "%Y-%m-%d")
 
+			if(output_value == 10):
+				set_time = due_time
+			elif(output_value <= 300):
+				set_time = due_time - 10
+			elif(output_value < 600 and output_value > 300):
+				set_time = due_time - 70
+			elif(output_value >= 600):
+				set_time = due_time - 140
+
+		print(set_time < today_time)
 		if(set_time < today_time):
-			print("hello")
+
 			due_time += output_value
 			if(due_time // 60 >= 24):
 				due_time -= 60 * 24
@@ -201,7 +213,6 @@ while(True):
 	o += 1
 	get_pages()
 	print("Iter: ", o)
-
 
 	sleep(60)
 
