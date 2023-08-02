@@ -26,7 +26,7 @@ def get_pages():
 	delta = datetime.timedelta(hours=3, minutes=0)
 	today_date = str(datetime.datetime.now(datetime.timezone.utc) + delta)[0:10]
 	today_time = str(datetime.datetime.now())[11:16]
-	today_time = str((int(today_time[11:13]) + 3)) + today_time[13:16]
+	today_time = str((int(today_time[0:2]) + 3)) + today_time[2:]
 	print(today_time)
 
 	for i in a:
