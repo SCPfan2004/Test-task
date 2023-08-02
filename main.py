@@ -104,7 +104,7 @@ def get_pages():
 					output_value = value
 
 		# Script work
-
+		print(set_time)
 		set_time = (int(set_time.split(":")[0]) * 60) + int(set_time.split(":")[1])
 		due_time = (int(due_time.split(":")[0]) * 60) + int(due_time.split(":")[1])
 
@@ -119,7 +119,7 @@ def get_pages():
 
 			iterator = 1
 			set_date = set_date[0:5] + month + f"-0{iterator}"
-
+	
 			while(set_pdate < today_pdate):
 				due_time += output_value
 				if(due_time // 60 >= 24):
@@ -127,10 +127,8 @@ def get_pages():
 					iterator += 1
 					set_date = set_date[0:8] + f"0{iterator}"
 					set_pdate = datetime.strptime(set_date, "%Y-%m-%d")
-					
+
 		print(set_time)
-		print(today_time)
-		print(set_time < today_time)
 		if(set_time < today_time):
 			print("hello")
 			due_time += output_value
