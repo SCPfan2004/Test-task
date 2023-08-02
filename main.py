@@ -25,6 +25,7 @@ def get_pages():
 
 	today_date = str(datetime.now())[0:10]
 	today_time = str(datetime.now())[11:16]
+	print(today_time)
 
 	for i in a:
 		# Preparing for script
@@ -104,7 +105,6 @@ def get_pages():
 					output_value = value
 
 		# Script work
-		print(set_time)
 		set_time = (int(set_time.split(":")[0]) * 60) + int(set_time.split(":")[1])
 		due_time = (int(due_time.split(":")[0]) * 60) + int(due_time.split(":")[1])
 
@@ -128,7 +128,6 @@ def get_pages():
 					set_date = set_date[0:8] + f"0{iterator}"
 					set_pdate = datetime.strptime(set_date, "%Y-%m-%d")
 
-		print(set_time)
 		if(set_time < today_time):
 			print("hello")
 			due_time += output_value
