@@ -209,9 +209,8 @@ def get_pages():
 o = 0
 while(True):
 	o += 1
-	#get_pages()
-	#input("Iter: ", o)
-	input("Hello: ")
+	get_pages()
+	print("Iter: ", o)
 
 	sleep(60)
 
