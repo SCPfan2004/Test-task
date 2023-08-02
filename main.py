@@ -31,7 +31,7 @@ def get_pages():
 		# Preparing for script
 		try:
 			status = i["properties"]["Status"]["select"]["name"]
-
+			print(status)
 			if(status == "Backlog" or status == "TO DO"):
 				continue
 			else:
