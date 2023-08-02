@@ -137,7 +137,8 @@ def get_pages():
 			elif(output_value >= 600):
 				set_time = due_time - 140
 
-
+		print(set_time)
+		print(today_time)
 		if(set_time < today_time):
 
 			due_time += output_value
@@ -211,6 +212,7 @@ while(True):
 	o += 1
 	get_pages()
 	print("Iter: ", o)
+
 
 	sleep(60)
 
