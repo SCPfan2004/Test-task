@@ -128,8 +128,7 @@ def get_pages():
 					set_date = set_date[0:8] + f"0{iterator}"
 					set_pdate = datetime.strptime(set_date, "%Y-%m-%d")
 
-		print(set_time)
-		print(today_time)
+		print(set_time < today_time)
 		if(set_time < today_time):
 			print("hello")
 			due_time += output_value
