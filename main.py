@@ -131,7 +131,7 @@ def get_pages():
 		print(set_time)
 		print(today_time)
 		if(set_time < today_time):
-
+			print("hello")
 			due_time += output_value
 			if(due_time // 60 >= 24):
 				due_time -= 60 * 24
